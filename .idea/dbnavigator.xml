@@ -23,7 +23,23 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="60a42bb1-fd77-4e8b-8e2d-b505df5593b6" object-ref="schemas/water_temperature_information/tables/city_and_temperature" />
+    </open-files>
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="60a42bb1-fd77-4e8b-8e2d-b505df5593b6" dataset="water_temperature_information.city_and_temperature" active-filter-id="41863f6b-c643-49cf-a652-3b4abdd92435">
+      <filter id="41863f6b-c643-49cf-a652-3b4abdd92435" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="city" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.ObjectQuickFilterManager">
+    <last-used-operator value="EQUAL" />
+    <filters />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="60a42bb1-fd77-4e8b-8e2d-b505df5593b6" dataset="water_temperature_information.city_and_temperature" active-filter-id="41863f6b-c643-49cf-a652-3b4abdd92435">
