@@ -5,8 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
+    private static Connection connection;
+    private static final String DBURL = "jdbc:mysql://localhost:3306/water_temperature_information";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "sheeuser123456@";
     protected static Connection getConnection() throws SQLException{
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/water_temperature_information","root", "sheeuser123456@");
-        return connection;
+        return connection = DriverManager.getConnection(DBURL,USERNAME, PASSWORD);
     }
+
 }

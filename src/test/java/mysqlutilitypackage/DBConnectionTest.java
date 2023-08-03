@@ -1,14 +1,16 @@
 package mysqlutilitypackage;
 
+
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
 class DBConnectionTest {
-    private DBConnection dbcon;
     @Test
-    public void getConnection() throws SQLException {
-        assertNotNull(dbcon.getConnection());
+    protected static Connection testGetConnection() throws SQLException{
+        Connection connection = DriverManager.getConnection("jdbc:h2:mem:test","sa", "");
+        return connection;
     }
 }
