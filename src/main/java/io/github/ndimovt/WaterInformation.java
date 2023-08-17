@@ -3,27 +3,15 @@ package io.github.ndimovt;
 
 public class WaterInformation {
     private String date;
-    private String city;
     private double temperature;
 
-    public WaterInformation(String date, String city, double temperature) {
+    public WaterInformation(String date,  double temperature) {
         this.date = date;
-        this.city = city;
         this.temperature = temperature;
     }
     @Override
     public String toString() {
-        return  date +"/"+ temperature +"/"+ city;
-    }
-    public String getDate() {
-        return date;
+        return  date +"/"+ temperature;
     }
 
-    public double getTemperature() {
-        return temperature;
-    }
-
-    public String getCity() {
-        return city;
-    }
 }

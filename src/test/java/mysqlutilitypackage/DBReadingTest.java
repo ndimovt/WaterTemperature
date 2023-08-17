@@ -1,46 +1,75 @@
 package mysqlutilitypackage;
 
+import io.github.ndimovt.ScientistTest;
 import org.junit.jupiter.api.*;
-import org.mockito.Mock;
 
 import java.sql.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-@Disabled
 
 class DBReadingTest {
     private String resultCity;
     private String resultDate;
     private double resultTemp;
     private ResultSet testResultSet;
+    private ScientistTest scientistTest;
     private static PreparedStatement statement;
-    private static PreparedStatement testStatement2;
     private static Connection connection;
-    private static final String DBURL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
-    private static final String DB_USERNAME = "sa";
-    private static final String DB_PASSWORD = "";
-    private static final String DBQUERRY = "CREATE TABLE city_and_temperature ( city VARCHAR(255), date DATE, water_temperature DOUBLE)";
+    private static final String DBQUERRY1 = "CREATE TABLE city_and_temperature ( city VARCHAR(255), date DATE, water_temperature DOUBLE)";
+    private static final String DBQUERRY2 = "CREATE TABLE account_info ( username VARCHAR(255), password VARCHAR(255))";
 
-    @BeforeAll
-    static void createConnection() throws SQLException {
-        connection = DriverManager.getConnection(DBURL,DB_USERNAME,DB_PASSWORD);
-        statement = connection.prepareStatement(DBQUERRY);
+    @Test
+    @DisplayName("testing scientist reading information")
+    public void testGetAccountInformation()throws SQLException{
+        try{
+            accountInfoTable();
+            statement = DBConnectionTest.testGetConnection().prepareStatement("INSERT INTO account_info (username, password) VALUES(?,?)");
+            statement.setString(1,"testaccount");
+            statement.setString(2,"testpass");
+            statement.executeUpdate();
+            statement = DBConnectionTest.testGetConnection().prepareStatement("SELECT * FROM account_info");
+            testResultSet = statement.executeQuery();
+            while(testResultSet.next()){
+                scientistTest = new ScientistTest(
+                        testResultSet.getString("username"),
+                        testResultSet.getString("password"));
+            }
+            assertEquals("testaccount",scientistTest.getUserName());
+            assertEquals("testpass", scientistTest.getPassword());
+        }finally {
+            testCloseConnection();
+        }
+    }
+    private Statement accountInfoTable()throws SQLException{
+        connection = DBConnectionTest.testGetConnection();
+        statement = connection.prepareStatement(DBQUERRY2);
         statement.executeUpdate();
+        return statement;
+    }
+    private Statement cityAndTempTable()throws SQLException{
+        connection = DBConnectionTest.testGetConnection();
+        statement = connection.prepareStatement(DBQUERRY1);
+        statement.executeUpdate();
+        return statement;
     }
 
     @Test
     @DisplayName("testing reading functions")
-    public void testGetInformation() {
+    public void testGetWaterInformation() {
         try{
-            String date = "2023-08-03";
+            cityAndTempTable();
+            String date = "2023-08-05";
             String city = "New Old York";
             double testTemp = 25.4;
-            DBWritingTest dbwrt = new DBWritingTest();
-            dbwrt.testAddRecordToDB(city,testTemp);
-            testStatement2 = DriverManager.getConnection(DBURL,DB_USERNAME,DB_PASSWORD).prepareStatement("""
+            statement = DBConnectionTest.testGetConnection().prepareStatement("INSERT INTO city_and_temperature(city, date, water_temperature) VALUES(?,?,?)");
+            statement.setString(1, city);
+            statement.setString(2, date);
+            statement.setDouble(3, testTemp);
+            statement.executeUpdate();
+            statement = DBConnectionTest.testGetConnection().prepareStatement("""
                     SELECT * FROM city_and_temperature
                     """);
-            testResultSet = testStatement2.executeQuery();
+            testResultSet = statement.executeQuery();
             while (testResultSet.next()){
                 resultDate = testResultSet.getString("date");
                 resultCity = testResultSet.getString("city");

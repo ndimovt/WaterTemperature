@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class DBWriting {
-    public static void addRecordToDB(String city, double temperature) throws SQLException {
+    public static void addCityAndTemperatureToDB(String city, double temperature) throws SQLException {
         PreparedStatement pst = null;
         try{
             pst = DBConnection.getConnection().prepareStatement("INSERT INTO city_and_temperature(city, date, water_temperature) VALUES(?,?,?)");
