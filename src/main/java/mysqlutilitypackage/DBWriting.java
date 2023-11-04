@@ -10,7 +10,7 @@ public class DBWriting {
     public static void addCityAndTemperatureToDB(String city, double temperature) throws SQLException {
         PreparedStatement pst = null;
         try{
-            pst = DBConnection.getConnection().prepareStatement("INSERT INTO city_and_temperature(city, date, water_temperature) VALUES(?,?,?)");
+            pst = DBConnection.getConnection().prepareStatement("call water_temperature_information.insertData(?,?,?)");
             pst.setString(1,city);
             pst.setString(2,date());
             pst.setDouble(3,temperature);

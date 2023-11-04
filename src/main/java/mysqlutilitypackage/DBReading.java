@@ -12,9 +12,7 @@ public class DBReading {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try{
-            preparedStatement = DBConnection.getConnection().prepareStatement("""
-                    SELECT * FROM account_info
-                    """);
+            preparedStatement = DBConnection.getConnection().prepareStatement("call water_temperature_information.getFullData()");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 scientist = new Scientist(
@@ -32,15 +30,12 @@ public class DBReading {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try{
-            preparedStatement = DBConnection.getConnection().prepareStatement("""
-                    SELECT * FROM city_and_temperature
-                    WHERE city = ?
-                    """);
+            preparedStatement = DBConnection.getConnection().prepareStatement("call water_temperature_information.getTownReadings(?)");
             preparedStatement.setString(1,city);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                  waterInfo = new WaterInformation(
-                        resultSet.getString("date"),
+                        resultSet.getString("m_date"),
                         resultSet.getDouble("water_temperature")
                 );
                 System.out.println(waterInfo);
