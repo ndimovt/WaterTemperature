@@ -2,7 +2,6 @@ package io.github.ndimovt;
 import mysqlutilitypackage.DBReading;
 import mysqlutilitypackage.DBWriting;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
@@ -20,25 +19,17 @@ public class Main {
             String username = inn.nextLine();
             System.out.println("enter password");
             String password = inn.nextLine();
-            try {
-                enterInTheSystem(username, password);
-            }catch (SQLException sqe){
-                sqe.printStackTrace();
-            }
+            enterInTheSystem(username, password);
         } else if (choice == 2) {
             System.out.println("Enter town (Kavarna, Balchik, Varna or Burgas)");
             inn.nextLine();
             String town = inn.nextLine();
-            try {
-                searchWaterTempForTown(town);
-            } catch (SQLException sqe) {
-                sqe.printStackTrace();
-            }
+            searchWaterTempForTown(town);
         }else {
             System.exit(0);
         }
     }
-    private static void searchWaterTempForTown(String town)throws SQLException {
+    private static void searchWaterTempForTown(String town){
         if (town.equalsIgnoreCase(String.valueOf(Towns.KAVARNA)) || town.equalsIgnoreCase(String.valueOf(Towns.BALCHIK))
                 || town.equalsIgnoreCase(String.valueOf(Towns.VARNA)) || town.equalsIgnoreCase(String.valueOf(Towns.BURGAS))) {
             DBReading.getWaterInformation(town);
@@ -46,7 +37,7 @@ public class Main {
             System.out.println("No such town exists");
         }
     }
-    private static void enterInTheSystem(String username, String password) throws SQLException{
+    private static void enterInTheSystem(String username, String password){
         Scientist scientist = DBReading.getAccountInformation();
         if(scientist.getUserName().equals(username) & scientist.getPassword().equals(password)){
             System.out.println("Enter town to add temperature(Kavarna, Balchik, Varna or Burgas)");
@@ -61,12 +52,7 @@ public class Main {
     private static void addTemperatureRecord(String town, double temperature){
         if (town.equalsIgnoreCase(String.valueOf(Towns.KAVARNA)) || town.equalsIgnoreCase(String.valueOf(Towns.BALCHIK))
                 || town.equalsIgnoreCase(String.valueOf(Towns.VARNA)) || town.equalsIgnoreCase(String.valueOf(Towns.BURGAS))) {
-            try {
                 DBWriting.addCityAndTemperatureToDB(town, temperature);
-            } catch (SQLException sqe) {
-                System.out.println("No connection to database! Please try again later or call your IT support!");
-                sqe.printStackTrace();
-            }
         }else{
             System.out.println("No such town exists");
         }

@@ -8,7 +8,7 @@ import java.sql.*;
 public class DBReading {
     private static WaterInformation waterInfo;
     private static Scientist scientist;
-    public static Scientist getAccountInformation()throws SQLException {
+    public static Scientist getAccountInformation() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try{
@@ -20,13 +20,17 @@ public class DBReading {
                         resultSet.getString("password")
                 );
             }
-        }finally {
+            return scientist;
+        }catch (SQLException sqe){
+            System.out.println("No connection to database! Please try again later or call your IT support!");
+            sqe.printStackTrace();
+        } finally {
             closeConnection(preparedStatement,resultSet,DBConnection.getConnection());
         }
-        return scientist;
+        return null;
     }
 
-    public static void getWaterInformation(String city)throws SQLException {
+    public static void getWaterInformation(String city) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try{
@@ -40,7 +44,11 @@ public class DBReading {
                 );
                 System.out.println(waterInfo);
             }
-        }finally {
+        }catch (SQLException sqe){
+            System.out.println("No connection to database! Please try again later or call your IT support!");
+            sqe.printStackTrace();
+        }
+        finally {
             closeConnection(preparedStatement,resultSet,DBConnection.getConnection());
         }
     }
