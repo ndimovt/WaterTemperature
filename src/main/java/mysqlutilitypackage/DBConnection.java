@@ -12,10 +12,9 @@ public class DBConnection {
     protected static Connection getConnection(){
       try{
         connection = DriverManager.getConnection(DBURL,USERNAME, PASSWORD);
-        return connection;
       }catch (SQLException sqe){
         sqe.printStackTrace();
       }
-      return null;
+      return connection;
     }
 }

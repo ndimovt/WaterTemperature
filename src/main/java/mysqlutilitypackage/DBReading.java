@@ -20,14 +20,13 @@ public class DBReading {
                         resultSet.getString("password")
                 );
             }
-            return scientist;
         }catch (SQLException sqe){
             System.out.println("No connection to database! Please try again later or call your IT support!");
             sqe.printStackTrace();
         } finally {
             closeConnection(preparedStatement,resultSet,DBConnection.getConnection());
         }
-        return null;
+        return scientist;
     }
 
     public static void getWaterInformation(String city) {
